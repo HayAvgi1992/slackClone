@@ -12,8 +12,8 @@ function Header() {
                     <Search>
                         <input type="text" placeholder="Search..." />
                     </Search>
-
                 </SearchContainer>
+
                 <HelpOutlineIcon/>
             </Main>
             <UserContainer>
@@ -23,8 +23,8 @@ function Header() {
                 <UserImage>
                     <img src="https://i.imgur.com/6VBx3io.png" />
                 </UserImage>
-
             </UserContainer>
+            
         </Container>
     )
 }

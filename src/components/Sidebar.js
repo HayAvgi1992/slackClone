@@ -27,8 +27,8 @@ function Sidebar({rooms}) {
 
             <MainChannels>
                 {
-                    sidebarItemsData.map( item => (
-                        <MainChannelItem>
+                    sidebarItemsData.map((item, index) => (
+                        <MainChannelItem key={index}>
                             {item.icon}
                             {item.text}
                         </MainChannelItem>
@@ -45,8 +45,8 @@ function Sidebar({rooms}) {
                 </NewChannelContainer>
 
                 <ChannelList>
-                    {rooms.map(item => (
-                        <Channel>
+                    {rooms.map((item, index) => (
+                        <Channel key={index}>
                             # {item.name}
                         </Channel>
                     ))}
