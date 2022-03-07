@@ -18,7 +18,7 @@ function Sidebar({rooms}) {
         <Container>
             <WorkspaceContainer>
                 <Name>
-                    CleverProgrammer
+                    ProgrammerChannel
                 </Name>
                 <NewMessage>
                     <AddCircleOutlineIcon />

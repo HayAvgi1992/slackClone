@@ -33,10 +33,10 @@ function Chat() {
     )
 }
 
+// 3 rows, header chat container and chat input
 const Container = styled.div`
     display: grid;
-    grid-template-rows: 64px auto min-content;
-
+    grid-template-rows: 64px auto min-content; 
 `
 const Header = styled.div`
     padding-left: 20px;    
@@ -71,7 +71,7 @@ const ChannelInfo = styled.div`
 const ChannelName = styled.div`
     font-weight: 700;
 `
-
+// styled the icon
 const Info = styled(InfoOutlinedIcon)`
     margin-left: 10px;
 `

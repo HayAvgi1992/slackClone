@@ -12,7 +12,7 @@ function App() {
   const [rooms, setRooms] = useState([]);
 
   const getChannels = () => {
-
+    // onSnapshot is a webHook which run every time our firestore DB get updated.
     db.collection('rooms').onSnapshot((snapshot) => {
       setRooms(snapshot.docs.map(doc => {
         return {id: doc.id, name: doc.data().name}
