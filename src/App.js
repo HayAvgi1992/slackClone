@@ -7,19 +7,28 @@ import Login from './components/Login'
 import styled from 'styled-components'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
+import { auth } from './firebase'
 
 function App() {
   const [rooms, setRooms] = useState([]);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
 
   const getChannels = () => {
     // onSnapshot is a webHook which run every time our firestore DB get updated.
     db.collection('rooms').onSnapshot((snapshot) => {
       setRooms(snapshot.docs.map(doc => {
-        return {id: doc.id, name: doc.data().name}
+        return { id: doc.id, name: doc.data().name }
       }))
     })
   }
-  
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      localStorage.removeItem("user")
+      setUser(null)
+    })
+  }
+
   useEffect(() => {
     getChannels()
   }, [])
@@ -28,20 +37,23 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Container>
-          <Header/>
-          <Main>
-            <Sidebar rooms={rooms}/>
-            <Switch>
-              <Route path="/room">
-                <Chat/>
-              </Route>
-              <Route path="/">
-                <Login/>
-              </Route>
-            </Switch>
-          </Main>
-        </Container>
+        {!user ?
+          <Login setUser={setUser} /> :
+          <Container>
+            <Header user={user} signOut={signOut} />
+            <Main>
+              <Sidebar rooms={rooms} />
+              <Switch>
+                <Route path="/room/:channelId">
+                  <Chat />
+                </Route>
+                <Route path="/">
+                  Select or Create Channel
+                </Route>
+              </Switch>
+            </Main>
+          </Container>
+        }
       </Router>
     </div>
   );

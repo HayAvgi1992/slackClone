@@ -1,15 +1,49 @@
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import ChatInput from './ChatInput'
+import ChatMessage from './ChatMessage'
+import db from '../firebase'
+import { useParams } from 'react-router-dom'
 
 function Chat() {
+    const [channel, setChannel] = useState()
+    const [messages, setMessages] = useState([])
+
+    let { channelId } = useParams();
+
+    const getMessages = useCallback(() => {
+        db.collection("rooms")
+            .doc(channelId)
+            .collection("messages")
+            .orderBy('timestamp', 'asc')
+            .onSnapshot(snapshot => {
+                let messages = snapshot.docs.map(doc => doc.data())
+                setMessages(messages)
+            })
+    }, [channelId])
+
+
+    const getChannel = useCallback(() => {
+        db.collection("rooms")
+            .doc(channelId)
+            .onSnapshot(snapshot => {
+                setChannel(snapshot.data());
+            })
+    }, [channelId])
+
+
+    useEffect(() => {
+        getChannel();
+        getMessages();
+    }, [channelId, getChannel, getMessages])
+
     return (
         <Container>
             <Header>
                 <Channel>
                     <ChannelName>
-                        # clever
+                        # {channel && channel.name}
                     </ChannelName>
                     <ChannelInfo>
                         Company-wide announcements and work-based matters
@@ -19,16 +53,21 @@ function Chat() {
                     <div>
                         Details
                     </div>
-                    <Info/>
+                    <Info />
                 </ChannelDetails>
 
             </Header>
             <MessageContainer>
-
+                {
+                    messages.length > 0 &&
+                    messages.map((msg, index) => {
+                        return <ChatMessage key={index} message={msg} />
+                    })
+                }
             </MessageContainer>
-            <ChatInput>
-            
-            </ChatInput>
+
+            <ChatInput />
+
         </Container>
     )
 }
