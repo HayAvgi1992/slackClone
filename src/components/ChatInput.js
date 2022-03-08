@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import SendIcon from '@material-ui/icons/Send';
 
-function ChatInput() {
+function ChatInput({ sendMessage }) {
+    const [userInput, setUserInput] = useState("")
+
+    const send = (e) => {
+        e.preventDefault();
+        if (userInput) {
+            sendMessage(userInput)
+            setUserInput("")
+        }
+        
+    }
+
     return (
         <Container>
             <InputContainer>
                 <form>
-                    <input type='text' placeholder='Message here...'/>
-                    <SendButton>
-                        <MySendIcon/>
+                    <input
+                        onChange={e => { setUserInput(e.target.value) }}
+                        type='text'
+                        value={userInput}
+                        placeholder='Message here...'
+                    />
+                    <SendButton onClick={send} type="submit">
+                        <MySendIcon />
                     </SendButton>
-                </form>            
+                </form>
             </InputContainer>
         </Container>
     )
@@ -45,21 +61,22 @@ const InputContainer = styled.div`
 
 `
 
-const SendButton = styled.div`
+const SendButton = styled.button`
      background: #007a5a;
-     border-radius: 2px;
      width: 33px;
      height: 33px;
      display: flex;
      align-items: center;
      justify-content: center
-     margin-right: 5px;
      cursor: pointer;
      margin-right: 8px;
      border-radius:8px;
+     border: none;
 
      .MuiSvgIcon-root {
          width: 18px;
+
+         
      }
      :hover {
          background: #148567
@@ -67,8 +84,6 @@ const SendButton = styled.div`
 `
 
 const MySendIcon = styled(SendIcon)`
-     color: #e6e6e6;
-    padding-left: 7px;
-
-
+    color: #e6e6e6;
+    padding-left: 3px;
 `

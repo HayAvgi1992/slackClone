@@ -1,22 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 
-
+// https://randomuser.me/api/portraits/women/63.jpg
 function ChatMessage({ message }) {
     return (
         <Container>
             <UserAvatar>
-                <img alt="" src="https://randomuser.me/api/portraits/women/63.jpg" />
+                <img alt="" src={message.userImage} />
             </UserAvatar>
 
             <MessageContent>
                 <Name>
-                    Hay Avgi
-                    <span>1/1/1</span>
+                    {message.user}
+                    <span>{new Date(message.timestamp.toDate()).toUTCString()}</span>
                 </Name>
 
                 <Text>
-                    Some Challenge
+                    {message.text}
                 </Text>
             </MessageContent>
         </Container>
