@@ -48,7 +48,10 @@ function App() {
                   <Chat user={user} />
                 </Route>
                 <Route path="/">
-                  Select or Create Channel
+                  <NoChannel> 
+                    Hey There! <br/>
+                    Please Select or Create Channel 
+                  </NoChannel>
                 </Route>
               </Switch>
             </Main>
@@ -70,4 +73,15 @@ const Container = styled.div`
 const Main = styled.div`
   display: grid;
   grid-template-columns: 260px auto;  
+`
+
+const NoChannel = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: #6C476C;
+  text-indent: 100px;
+  letter-spacing: 2px;
 `
